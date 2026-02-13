@@ -188,8 +188,7 @@ clear-Host
 
 $WinEvents_Biometric = @()
 
-$AllBioMetricEventIDs = (Get-WinEvent -FilterHashtable @{ProviderName='microsoft-windows-Biometrics'}  -ErrorAction SilentlyContinue) `
-    | Where-Object { $_.TimeCreated -ge $Today }   `
+Get-WinEvent -FilterHashtable @{ProviderName='microsoft-windows-Biometrics'}  -ErrorAction SilentlyContinue `
     | select ID -Unique `
     | sort ID
 # $AllBioMetricEventIDs    # on my test PC      =>      Id = 1105,1108,1109,1601
@@ -472,4 +471,5 @@ Write-Host
 #########################################################################
 # $essCapableDevices
 if ($essCapableDevices) { Write-Output "This computer is ESS-capable."    ; Return 0 }
+
 else                    { Write-Output "This computer is not ESS-capable."; Return 1 }
