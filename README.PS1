@@ -21,9 +21,15 @@ Windows Hello Enhanced Sign-in Security ( ESS )
 Unknown   The Windows Biometric Credential Manager failed to remove a credential.      -   The operation failed with error: 0x80098031.
 - Event-OD ????  These errors suggest a problem with the biometric service, possibly related to drivers, system configuration, biometric data, or even hardware.
 ---- launch Device Manager. 
----- Locate your biometric-related driver, right-click it, and select Uninstall. 
+----    Locate your biometric-related driver, right-click it, and select Uninstall. 
 ---- Action > Scan for hardware changes. 
-----    Windows will search for and install an appropriate driver if connected to the internet. Restart your device after installation.  
+----    Windows will search for and install an appropriate driver if connected to the internet. 
+----    Restart your device after installation.  
+---- services.msc ( Services manager ). 
+----      Locate the Windows Biometric Service, right-click it, and select Stop.
+----  Explorer - C:\Windows\System32\WinBioDatabase
+----      find the data files there, and delete them. (If they cannot be deleted, rename them first and then delete.)
+----  Restart your device. Follow the previous steps to start the Windows Biometric Service again.
 
 
 # Face biometric sensor
