@@ -17,6 +17,15 @@ Windows Hello Enhanced Sign-in Security ( ESS )
 # Device firmware (BIOS) with a Secure Devices (SDEV) ACPI table configured by the device manufacturer for the included biometric hardware
 #   e.g.  Most brands has a specific setting that must be enable. “Enhanced Windows Biometric Security”
 
+
+Unknown   The Windows Biometric Credential Manager failed to remove a credential.      -   The operation failed with error: 0x80098031.
+- Event-OD ????  These errors suggest a problem with the biometric service, possibly related to drivers, system configuration, biometric data, or even hardware.
+---- launch Device Manager. 
+---- Locate your biometric-related driver, right-click it, and select Uninstall. 
+---- Action > Scan for hardware changes. 
+----    Windows will search for and install an appropriate driver if connected to the internet. Restart your device after installation.  
+
+
 # Face biometric sensor
 # --------------
 # DevMgmt.Msc -> Universal Serial Bus controllers -> eXtensible Host Controller
