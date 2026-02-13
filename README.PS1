@@ -90,3 +90,53 @@ Get-PnpDevice -Class Camera -PresentOnly |Select FriendlyName,InstanceId,@{Name=
     Intel(R) MTL AVStream Camera DISPLAY\INT3480\4&130D02DC&1&UID144512        SILENTINSTALL, RAWDEVICEOK, SURPRISEREMOVALOK
 
 #>
+
+
+
+# Fingerprint biometric sensor
+# DevMgmt.Msc -> Biometric devices -> Fingerprint
+#           Properties  - Details - [Device instance path].  ( USB\VID_413C&PID_B06E\DF49E5AA0FC05665     )
+# reg query HKLM\SYSTEM\CurrentControlSet\Enum\[Device instance path]\Device Parameters\WinBio\Configurations     /v SecureFingerprint 
+#       should return   1    
+
+# ESS is enabled ?
+# a)
+# Windows Security application  -> Device Security 
+#   -> if "Enhanced Sign-in Security" is visible 
+#          => enabled
+#               => hardware capability of the system
+#               =>  or "Unavailable due to incompatible hardware"   -> no capable sensors deteced
+# b)
+# Windows > Settings > Accounts > Sign-in options 
+#     Additional settings > Sign in with an external camera or fingerprint reader  - temporarily Enabel/Disable ESS
+#                            if ESS is enabled and you can't use    external    peripherals to sign in. 
+#                           
+
+# ESS Win-Events
+# Event Viewer -> Applications and Services Logs -> Microsoft -> Windows -> Biometrics -> Operational.
+#
+#    wevtutil el | find /i "Biometric"
+#          Microsoft-Windows-Biometrics/Analytic
+#          Microsoft-Windows-Biometrics/Operational
+#
+#
+# - event ID 1108 for the corresponding sensor is loaded properly.
+#    Get-WinEvent -FilterHashtable @{ProviderName='microsoft-windows-Biometrics'; Id=1108}  -ErrorAction SilentlyContinue
+#
+#    cameras are described using Windows Hello Face Software Device
+#
+#        ->  .... Facial Recognition (Windows Hello) Software Device (ROOT\WINDOWSHELLOFACESOFTWAREDRIVER\0000)....
+#
+#    fingerprint devices are described using the device's specific module and device ID.
+#        ->  device Manager -> Biometric Devices > [Fingerprint Module] > Properties > Details > Device Instance Path.
+#
+
+
+Get-WinEvent -FilterHashtable @{ProviderName='microsoft-windows-Biometrics'}  -ErrorAction SilentlyContinue `
+    | select ID -Unique `
+    | sort ID
+    
+    # on my test PC      =>      Id = 1105,1108,1109,1601
+
+
+
