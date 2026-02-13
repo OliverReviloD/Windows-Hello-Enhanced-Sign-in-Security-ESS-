@@ -5,7 +5,8 @@
 .DESCRIPTION
                 This script checks if a device is ESS-capable. It checks USB host controllers and cameras.
 .EXAMPLE
-                Run it manually on a local device or use Intune remediation script to check if a device is ESS-capable.
+                Run it manually on a local device ( for Intune usage as detection script ifcheck if a device is ESS-capable -> some modifcations are required)
+                never tested the script via Intune until now ( 2023-Feb-13)
 .NOTES
                 Nicklas Ahlberg:  initial development and explanaition         https://www.rockenroll.tech/2025/01/21/windows-hello-enhanced-sign-in-security/
                 Nicklas Ahlberg:  basic scripts from                           https://github.com/NicklasAhlberg/Intune/tree/main/Remediations/WHfB
@@ -473,3 +474,4 @@ Write-Host
 if ($essCapableDevices) { Write-Output "This computer is ESS-capable."    ; Return 0 }
 
 else                    { Write-Output "This computer is not ESS-capable."; Return 1 }
+
