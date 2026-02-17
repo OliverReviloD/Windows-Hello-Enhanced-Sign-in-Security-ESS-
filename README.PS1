@@ -138,5 +138,9 @@ Get-WinEvent -FilterHashtable @{ProviderName='microsoft-windows-Biometrics'}  -E
     
     # on my test PC      =>      Id = 1105,1108,1109,1601
 
-
+Services.Msc
+        Services.msc - 'Windows Biometric Service' - 'Startup type' change to 'Automatic'
+        
+        sc config WbioSrvc start= Demand
+        sc config WbioSrvc start= Auto
 
