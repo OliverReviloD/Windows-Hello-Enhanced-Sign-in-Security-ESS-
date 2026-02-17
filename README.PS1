@@ -225,7 +225,27 @@ Computer > Administrative Templates > Windows Components > Windows Hello For Bus
 Telemetry 
 HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection      AllowTelemetry   1.
 Services.MSC - "Connected User Experiences and Telemetry"                 Start-up type    Automatic 
+################################
 
+     RegKey  'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USB\VID_27C6&PID_63AC\UIDC1AFEBBC_XXXX_MOC_B0\Device Parameters\WinBio\Configurations'   -  'SecureFingerprint' should be '1'
+        
+        
+        Get-ItemPropertyValue : Property SecureFingerprint does not exist at path HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USB\VID_27C6&PID_63AC\UIDC1AFEBBC_XXXX_MOC_B0\Device Parameters\WinBio\Configurations.
+        At C:\Dell\WindowsHellofB-ESS-capable\WindowsHellofB-ESS-capable_Detection_Devices_v2026_02_16_v8.ps1:167 char:35
+        + ... rintValue = Get-ItemPropertyValue -Path ("Microsoft.PowerShell.Core\R ...
+        +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            + CategoryInfo          : InvalidArgument: (:) [Get-ItemPropertyValue], PSArgumentException
+            + FullyQualifiedErrorId : Argument,Microsoft.PowerShell.Commands.GetItemPropertyValueCommand
+ 
+        Result from Registry:  Device 'Goodix Moc Fingerprint' is ESS-Capable ('SecureFingerprint' eq 1) = False
 
+###################################
+Unknown EventID '1020'
+The Windows Biometric Service cannot complete a request because biometric operations are disabled by current system policy. 
+1600 Information      The Windows Biometric Service failed to start its secure component.Reason for unavailability: 12.The operation failed with error: 0x80070032. 
 
-
+######################
+net stop WbioSrvc
+C:\Windows\System32\WinBioDatabase        Rename the .DAT file to a .DAT.BAK file.
+net start WbioSrvc
+######################
