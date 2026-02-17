@@ -117,7 +117,7 @@ function Check-DeviceCapabilities__CM_DEVCAP_SECUREDEVICE_for_WHfB_ESS
 Clear-Host
 $AllDeviceObjects = @()
 
-
+$MyDebug = $True
 
 #   !   !   !   !   !   !   !   !   !   !   !   !
 # NOTE :    cctk --fingerprintreader=Enabled    => REBOOT required
@@ -158,7 +158,7 @@ if ($fpNames)
         #
         # Get-Item -Path "Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USB\VID_27C6&PID_634C\UID8C267D71_XXXX_MOC_B0\Device Parameters\WinBio\Configurations"
 
-        $RegPathExists = Get-Item -Path ("Microsoft.PowerShell.Core\Registry::" + $RegPath)
+        $RegPathExists = Get-Item -Path ("Microsoft.PowerShell.Core\Registry::" + $RegPath)  -ErrorAction SilentlyContinue
         if ( $RegPathExists )
             {
             if ( $MyDebug ) { Write-Host "RegPath exists " }
@@ -168,7 +168,7 @@ if ($fpNames)
             #               Configurations                 DefaultConfiguration       : 0                                                                                                                                   
             #                                              SecureFingerprint          : 1                                                                                                                                   
             #                                              VirtualSecureConfiguration : 1      
-            $RegKeyExists = Get-ItemProperty -Path ("Microsoft.PowerShell.Core\Registry::" + $RegPath) -Name SecureFingerprint  -ErrorAction SilentlyContinue
+            $RegKeyExists = Get-ItemProperty -Path ("Microsoft.PowerShell.Core\Registry::" + $RegPath) -ErrorAction SilentlyContinue | Where { $_.Property -eq 'SecureFingerprint' }
             if ( $RegKeyExists )
                 {
                 if ( $MyDebug ) { Write-Host "RegKey  exists" }
@@ -311,5 +311,4 @@ $AllDeviceObjects  | select deviceName,InstanceId,Class,Capabilities_SECUREDEVIC
 #########################################################################
 # $essCapableDevices
 if ($essCapableDevices) { Write-Output "The devices of this computer are     'Windows Hello ESS' capable (Windows Hello Enhanced Sign-in Security)"; Return 0 }
-
 else                    { Write-Output "The devices of this computer are not 'Windows Hello ESS' capable (Windows Hello Enhanced Sign-in Security)"; Return 1 }
