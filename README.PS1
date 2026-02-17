@@ -138,9 +138,17 @@ Get-WinEvent -FilterHashtable @{ProviderName='microsoft-windows-Biometrics'}  -E
     
     # on my test PC      =>      Id = 1105,1108,1109,1601
 
-Services.Msc
+Services.MSC
         Services.msc - 'Windows Biometric Service' - 'Startup type' change to 'Automatic'
         
         sc config WbioSrvc start= Demand
         sc config WbioSrvc start= Auto
+GPEdit.MSC
+    Computer Configuration > Administrative Templates > Windows Components > Biometrics
+    - This policy setting allows or prevents the Windows Biometric Service to run on this computer.
+    - If you enable or do not configure this policy setting, 
+    - the Windows Biometric Service is available, and 
+    - users can run applications that use biometrics on Windows. 
+    If you want to enable the ability to log on with biometrics, you must also configure the "Allow users to log on using biometrics" policy setting.
+    If you disable this policy setting, the Windows Biometric Service is unavailable, and users cannot use any biometric feature in Windows.
 
