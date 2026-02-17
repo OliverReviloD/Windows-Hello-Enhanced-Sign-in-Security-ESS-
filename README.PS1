@@ -152,3 +152,80 @@ GPEdit.MSC
     If you want to enable the ability to log on with biometrics, you must also configure the "Allow users to log on using biometrics" policy setting.
     If you disable this policy setting, the Windows Biometric Service is unavailable, and users cannot use any biometric feature in Windows.
 
+    e.g.  HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System\AllowDomainPINLogon
+
+
+1020 - The Windows Biometric Service cannot complete a request because biometric operations are disabled by current system policy. 
+ 
+1600 - The Windows Biometric Service failed to start its secure component.Reason for unavailability: 12.The operation failed with error: 0x80070032.     
+
+		Um den Fehler 0x80070032 zu beheben, sollten Sie zunächst versuchen, erneut eine PIN zu erstellen, sich abzumelden und das Gerät neu zu starten. 
+
+		Re-enroll your PIN:
+		Re-enroll your Facial Recognition
+
+
+Windows Hello Face Virtual Software Device (\Bootstrap\Virtual Sensors\{0527b250-7514-4321-8b68-41c65f956998}).
+
+Biometric Service failed to configure a Biometric Unit for sensor: Windows Hello Face Virtual Software Device (\Bootstrap\Virtual Sensors\{0527b250-7514-4321-8b68-41c65f956998}).
+The operation failed with error: 0x80004001
+
+The operation failed with error: 0x80070032.
+Configure Automatic Startup of Biometric-Service ( Services.Msc )
+
+Biometric Service successfully created a Biometric Unit for sensor: Control Vault w/ Fingerprint Touch Sensor (CVUSBDRV\CV3_WBF_PROVIDER_TOUCH\6&C3AC727&0&513)
+The sensor's mode is "Advanced," its pool-type is "System," and it's isolated in a "Local System" process.
+
+
+ the device driver ((C:\windows\system32\winBioplugins\ *.dll )) is signed with a certificate that expired on 26 - 27 september , depending on your timezone.
+
+enabled Windows Hello for business Intune 
+----------
+July 2024, the following Intune profiles for 'identity protection' and 'account protection' were deprecated and replaced by a new consolidated profile named 'Account protection'. 
+This newer profile is found in the account protection policy node of endpoint security,
+----------
+Intune -> Device -> enrollment   -> Windows hello for business
+Identity protection (previously)
+Intune -> Devices > Configuration > Create > New Policy > Windows 10 and later > Templates > Identity Protection
+
+
+In addition to Account protection profiles, Intune supports the following options to manage settings for Windows Hello for Business:
+
+During device enrollment: Configure tenant-wide policy that applies Windows Hello settings to devices at the time the device enrolls with Intune.
+-- Configure Windows Hello for Business on devices when they enroll with Intune
+-- https://learn.microsoft.com/en-us/intune/intune-service/protect/windows-hello
+
+Security baselines: Some settings for Windows Hello can be managed through Intune's security baselines, 
+like the baselines for Microsoft Defender for Endpoint security or Security Baseline for Windows 10 and later.
+-- Use security baselines to help secure Windows devices you manage with Microsoft Intune
+-- https://learn.microsoft.com/en-us/intune/intune-service/protect/security-baselines
+-- https://learn.microsoft.com/en-us/intune/intune-service/protect/security-baseline-settings-mdm-all?pivots=mdm-24h2#windows-hello-for-business
+
+Settings catalog: The settings from endpoint security Account protection profiles are available in the Intune settings catalog.
+-- Use the Intune settings catalog to configure settings
+-- https://learn.microsoft.com/en-us/intune/intune-service/configuration/settings-catalog?tabs=sc-search-filter%2Csc-reporting
+
+
+https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/configure?source=recommendations#configure-windows-hello-for-business-using-microsoft-intune
+
+reg query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Policies\PassportForWork\
+	HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Policies\PassportForWork\Biometrics
+	HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Policies\PassportForWork\{TenantId}
+	HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Policies\PassportForWork\SecurityKey
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Policies\PassportForWork\Biometrics        UseBiometrics    REG_DWORD    0x0
+
+
+GpEdit
+Computer > Administrative Templates > Windows Components > Windows Hello For Business  ---- Use Biometrics --- enabled
+Computer > Administrative Templates > Windows Components > Windows Hello For Business  ---- Use Windows Hello For Business --- enabled
+
+
+
+Telemetry 
+HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection      AllowTelemetry   1.
+Services.MSC - "Connected User Experiences and Telemetry"                 Start-up type    Automatic 
+
+
+
+
