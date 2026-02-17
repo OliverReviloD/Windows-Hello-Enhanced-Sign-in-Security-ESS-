@@ -169,7 +169,7 @@ if ($fpNames)
             #                                              SecureFingerprint          : 1                                                                                                                                   
             #                                              VirtualSecureConfiguration : 1      
             $RegKeyExists = Get-ItemProperty -Path ("Microsoft.PowerShell.Core\Registry::" + $RegPath) -Name SecureFingerprint  -ErrorAction SilentlyContinue
-            if ( $RegPathExists )
+            if ( $RegKeyExists )
                 {
                 if ( $MyDebug ) { Write-Host "RegKey  exists" }
                 $RegValue = Get-ItemPropertyValue -Path ("Microsoft.PowerShell.Core\Registry::" + $RegPath) -Name SecureFingerprint  -ErrorAction SilentlyContinue
@@ -311,4 +311,5 @@ $AllDeviceObjects  | select deviceName,InstanceId,Class,Capabilities_SECUREDEVIC
 #########################################################################
 # $essCapableDevices
 if ($essCapableDevices) { Write-Output "The devices of this computer are     'Windows Hello ESS' capable (Windows Hello Enhanced Sign-in Security)"; Return 0 }
+
 else                    { Write-Output "The devices of this computer are not 'Windows Hello ESS' capable (Windows Hello Enhanced Sign-in Security)"; Return 1 }
